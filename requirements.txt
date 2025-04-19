@@ -1,0 +1,4 @@
+awscli-local
+requests
+typer
+rich

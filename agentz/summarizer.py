@@ -2,38 +2,55 @@ import json
 from pathlib import Path
 from rich.console import Console
 from rich.table import Table
+from agentz.llm.loader import get_llm
 
-KEV_FILE = Path("data/kev.json")
+DATA_FILE = Path("data/all_sources.json")
 console = Console()
 
-def summarize_threats():
-    if not KEV_FILE.exists():
-        console.print("[red]No KEV feed found. Run `agentz fetch` first.[/red]")
+def summarize_threats(mode="table"):
+    if not DATA_FILE.exists():
+        console.print("[red]No threat feed found. Run `agentz fetch` first.[/red]")
         return
 
-    with open(KEV_FILE) as f:
-        data = json.load(f)
+    with open(DATA_FILE) as f:
+        items = json.load(f)
 
-    vulnerabilities = data.get("vulnerabilities", [])
-
-    if not vulnerabilities:
-        console.print("[yellow]No vulnerabilities found in KEV feed.[/yellow]")
+    if not items:
+        console.print("[yellow]No threats found in data/all_sources.json[/yellow]")
         return
 
-    table = Table(title="🚨 Top 5 KEV Vulnerabilities", show_lines=True)
-    table.add_column("CVE ID", style="cyan", no_wrap=True)
-    table.add_column("Vendor", style="magenta")
-    table.add_column("Product", style="green")
-    table.add_column("Due Date", style="red")
-    table.add_column("Description", style="white")
+    items = items[:5]  # Limit to top 5 for now
 
-    for vuln in vulnerabilities[:5]:
-        table.add_row(
-            vuln.get("cveID", "N/A"),
-            vuln.get("vendorProject", "N/A"),
-            vuln.get("product", "N/A"),
-            vuln.get("dueDate", "N/A"),
-            vuln.get("shortDescription", "N/A"),
-        )
+    if mode == "table":
+        table = Table(title="🚨 Top 5 Vulnerabilities (All Sources)", show_lines=True)
+        table.add_column("CVE ID", style="cyan", no_wrap=True)
+        table.add_column("Vendor", style="magenta")
+        table.add_column("Product", style="green")
+        table.add_column("Due Date", style="red")
+        table.add_column("Source", style="blue")
+        table.add_column("Description", style="white")
 
-    console.print(table)
+        for vuln in items:
+            table.add_row(
+                vuln.get("cveID", "N/A"),
+                vuln.get("vendorProject", "N/A"),
+                vuln.get("product", "N/A"),
+                vuln.get("dueDate", "N/A"),
+                vuln.get("source", "unknown"),
+                vuln.get("shortDescription", "N/A"),
+            )
+
+        console.print(table)
+
+    elif mode == "llm":
+        text_block = ""
+        for vuln in items:
+            text_block += f"- {vuln['cveID']} ({vuln.get('source', 'unknown')}): {vuln['shortDescription']}\n"
+
+        llm = get_llm()
+        console.print("[agentz] 🤖 Summarizing top threats with local LLM...\n")
+        summary = llm.summarize(text_block)
+        console.print(summary)
+
+    else:
+        console.print(f"[red]Unsupported mode: {mode}[/red]")
