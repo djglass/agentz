@@ -1,21 +1,16 @@
 [project]
 name = "agentz"
 version = "0.1.0"
-description = "Local threat intel summarizer agent with LLM support"
+description = "LLM-powered threat intel CLI"
 authors = [{ name = "Your Name", email = "your@email.com" }]
-readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "pandas",
-    "typer",
-    "rich",
-    "tqdm",
-    "python-dotenv",
-    "llama-cpp-python; platform_system != 'Windows'",
-    "transformers",
-    "sentence-transformers"
+    "typer[all]"
 ]
 
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[project.scripts]
+agentz = "agentz.cli:app"

@@ -1,0 +1,2 @@
+[console_scripts]
+agentz = agentz.cli:app

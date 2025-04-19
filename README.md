@@ -1,3 +1,3 @@
 # agentz
 
-A local threat intelligence summarizer agent powered by open-source LLMs.
+LLM-powered threat intel CLI agent.
