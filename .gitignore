@@ -1,12 +1,41 @@
-
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
-.env
-models/
-/data/
-/logs/
+*.py[cod]
+*$py.class
 
-/*.log
-*.json
-!pyproject.toml
-!.env.example
+# Virtual environment
+.venv/
+.env
+.env.*
+
+# LocalStack + Terraform artifacts
+localstack_api/lambda/lambda_function_payload.zip
+localstack_api/terraform/.terraform/
+localstack_api/terraform/.terraform.lock.hcl
+localstack_api/terraform/terraform.tfstate*
+*.tfstate*
+.tofu/
+.tofu.lock.hcl
+
+# Logs and runtime artifacts
+logs/
+agentz_state/
+*.log
+*.tmp
+
+# OS files
+.DS_Store
+
+# Python egg metadata
+*.egg-info/
+dist/
+build/
+
+# Jupyter / notebook cruft (if ever added)
+.ipynb_checkpoints/
+
+# IDE/project-specific
+.vscode/
+.idea/
+*.swp
+

@@ -1,17 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "agentz"
 version = "0.1.0"
-description = "LLM-powered threat intel CLI"
-requires-python = ">=3.10"
+description = "A local threat intel agent powered by LLMs"
+authors = [
+    { name="Dan Glass", email="dan@example.com" }
+]
 dependencies = [
-    "typer",
+    "typer[all]",
+    "rich",
     "requests"
 ]
 
-
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
-[project.scripts]
-agentz = "agentz.cli:app"
+[tool.setuptools.packages.find]
+include = ["agentz*"]

@@ -20956,5 +20956,10 @@
       "CWE-522"
     ],
     "source": "CISA KEV"
+  },
+  {
+    "cveID": "ABUSE-STUB",
+    "shortDescription": "Placeholder",
+    "source": "Abuse.ch"
   }
 ]

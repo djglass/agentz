@@ -1,7 +1,8 @@
 Metadata-Version: 2.4
 Name: agentz
 Version: 0.1.0
-Summary: LLM-powered threat intel CLI
-Requires-Python: >=3.10
-Requires-Dist: typer
+Summary: A local threat intel agent powered by LLMs
+Author-email: Dan Glass <dan@example.com>
+Requires-Dist: typer[all]
+Requires-Dist: rich
 Requires-Dist: requests

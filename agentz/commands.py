@@ -84,3 +84,43 @@ Description: {match.get('shortDescription', '')}
         llm = get_llm()
         summary = llm.summarize(prompt)
         console.print(Panel.fit(summary, title="🧠 AI Summary & Guidance"))
+
+@app.command(name="diff")
+def diff(
+    limit: int = typer.Option(10, help="Max number of new CVEs to display."),
+    summarize: bool = typer.Option(False, help="Use LLM to summarize new CVEs.")
+):
+    """Show new CVEs since the last fetch, with optional summary."""
+    from agentz.utils import tracker
+    from agentz.llm.loader import get_llm
+    from rich.console import Console
+    from rich.panel import Panel
+
+    console = Console()
+    new_items = tracker.get_new_cves()
+
+    if not new_items:
+        console.print("[cyan]No new CVEs since last fetch.[/cyan]")
+        return
+
+    display_items = new_items[:limit]
+    console.print(f"[green]🚨 {len(new_items)} new CVE(s) detected! Showing top {len(display_items)}:[/green]")
+
+    for item in display_items:
+        console.print(f" - [bold]{item['cveID']}[/bold] from {item.get('source', 'unknown')}: {item['shortDescription']}")
+
+    if summarize:
+        console.print("\n[agentz] 🤖 Summarizing new CVEs with local LLM...\n")
+        prompt = "Summarize the following new CVEs and suggest possible mitigations:\n\n"
+        for item in display_items:
+            prompt += f"- {item['cveID']} ({item.get('source', 'unknown')}): {item['shortDescription']}\n"
+
+        llm = get_llm()
+        summary = llm.summarize(prompt)
+        console.print(Panel.fit(summary.strip(), title="🧠 AI Summary"))
+
+        # Log each summary line to file
+        for item in display_items:
+            tracker.log_summary(item["cveID"], summary)
+
+
