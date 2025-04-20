@@ -1,21 +1,30 @@
-import os
+from langchain_core.runnables import Runnable
+from langchain_core.prompt_values import StringPromptValue
 import requests
 
-class LocalstackOllamaLLM:
-    def summarize(self, prompt):
-        api_id = os.getenv("LLM_API_ID")  # optionally hardcode if needed
-        if not api_id:
-            raise RuntimeError("LLM_API_ID is not set")
+from agentz.utils.localstack_helper import get_latest_local_api_url
 
-        url = f"http://localhost:4566/restapis/{api_id}/v1/_user_request_/hello"
+url = get_latest_local_api_url()
+
+class LocalstackOllamaLLM(Runnable):
+    def __init__(self):
+        self.endpoint = get_latest_local_api_url()
+
+    def invoke(self, input, config: dict = None, **kwargs) -> str:
+        # 🔧 Convert LangChain prompt objects to plain string
+        if isinstance(input, StringPromptValue):
+            input = input.to_string()
+        elif isinstance(input, dict) and "question" in input:
+            input = input["question"]
+        elif not isinstance(input, str):
+            input = str(input)
 
         try:
-            response = requests.post(
-                url,
-                json={"prompt": prompt},
-                timeout=int(os.getenv("AGENTZ_LLM_TIMEOUT", "60"))
-            )
+            response = requests.post(self.endpoint, json={"input": input})
             response.raise_for_status()
-            return response.text.strip()
+            return response.json().get("output", "No response")
         except Exception as e:
-            return f"[LLM Error - LocalStack]: {e}"
+            return f"[LLM error] {str(e)}"
+
+    def __call__(self, input, **kwargs) -> str:
+        return self.invoke(input, **kwargs)

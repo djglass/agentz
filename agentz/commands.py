@@ -123,4 +123,12 @@ def diff(
         for item in display_items:
             tracker.log_summary(item["cveID"], summary)
 
+from agentz.feeds.loader import load_feed
+
+def pull_kev():
+    print("🔄 Pulling CISA KEV feed...")
+    load_feed("kev")
+    print("✅ Done.")
+
+
 
