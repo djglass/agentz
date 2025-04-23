@@ -1,0 +1,16 @@
+Configuration Management Policy
+
+Purpose:
+Maintain system integrity through controlled configuration changes.
+
+Scope:
+All servers, network devices, cloud workloads.
+
+Controls:
+- IaC used for cloud provisioning (Terraform, ARM templates)
+- Production changes require CAB approval
+- Version-controlled configurations
+- Drift detection tools (e.g., Chef InSpec)
+
+Compliance:
+PCI 2.2; SOX change control principles.

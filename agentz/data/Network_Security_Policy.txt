@@ -1,0 +1,17 @@
+Network Security Policy (PCI & SOX Aligned)
+
+Purpose:
+Protect data integrity and confidentiality through secure network architecture.
+
+Scope:
+All corporate and cloud networks.
+
+Controls:
+- Segmentation of PCI data environments (DMZ, App, Data zones)
+- Firewall rules restrict east-west traffic
+- All network traffic logged for 90 days
+- VLANs and NAC used to enforce least privilege
+- IDS/IPS deployed in DMZ and PCI zones
+
+Compliance:
+Aligned with PCI DSS 1.2, 1.3; SOX ITGC network controls.

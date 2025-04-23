@@ -1,0 +1,20 @@
+Data Classification & Handling Policy
+
+Purpose:
+Ensure sensitive data is labeled, stored, and accessed appropriately.
+
+Scope:
+All business data, structured and unstructured.
+
+Data Classes:
+- Confidential (e.g., PCI, PII)
+- Internal Use
+- Public
+
+Controls:
+- PCI data must be encrypted at rest & in transit
+- Data access based on need-to-know
+- Periodic reviews of file shares, DBs
+
+Compliance:
+PCI DSS 3.4, 3.6; SOX data access principles.

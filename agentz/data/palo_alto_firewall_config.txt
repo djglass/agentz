@@ -1,0 +1,49 @@
+
+PALO ALTO FIREWALL CONFIGURATION
+
+Zones:
+  - trust
+  - untrust
+  - dmz
+  - management
+  - pci
+  - app
+  - data
+  - cloud-prod
+  - cloud-dev
+
+Sample Rules:
+rulebase security {
+  rule "Allow-Web-to-App" {
+    from "dmz"
+    to "app"
+    source ["10.0.1.0/24"]
+    destination ["10.0.2.0/24"]
+    application ["https"]
+    action "allow"
+    log-setting "log-default"
+    profile-setting {
+      antivirus "strict"
+      vulnerability "strict"
+      url-filtering "corp-default"
+    }
+  }
+
+  rule "Allow-App-to-DB" {
+    from "app"
+    to "data"
+    source ["10.0.2.0/24"]
+    destination ["10.0.3.0/24"]
+    application ["mssql-db"]
+    action "allow"
+  }
+
+  rule "Block-PCI-to-Cloud" {
+    from "pci"
+    to "cloud-prod"
+    source ["10.0.4.0/24"]
+    destination ["172.16.0.0/16"]
+    application ["any"]
+    action "deny"
+  }
+}

@@ -1,0 +1,17 @@
+Cloud Security Policy
+
+Purpose:
+Ensure secure use of cloud services including Azure and AWS.
+
+Scope:
+All production, development, and QA environments hosted in the cloud.
+
+Standards:
+- Azure Resource Groups and AWS VPCs must align to business units
+- Enforce tagging (Owner, Classification, Environment)
+- Enable encryption-at-rest and in-transit
+- IAM roles and policies audited quarterly
+- Logging via Azure Monitor, AWS CloudTrail
+
+Compliance:
+Supports PCI DSS 12.3 and SOX access controls.

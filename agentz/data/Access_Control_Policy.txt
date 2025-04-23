@@ -1,0 +1,16 @@
+Access Control Policy
+
+Purpose:
+Restrict access to data and systems based on roles.
+
+Scope:
+All employees, systems, and services.
+
+Standards:
+- RBAC enforced across AD, AzureAD, and IAM
+- MFA required for all admin accounts
+- Quarterly access reviews
+- Terminated employees disabled within 24h
+
+Compliance:
+PCI DSS 7.x, 8.x; SOX ITGC on logical access controls.

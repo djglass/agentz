@@ -1,5 +1,5 @@
 from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from pathlib import Path
 
 INDEX_DIR = str(Path("agentz_state/rag_index"))

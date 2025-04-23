@@ -1,0 +1,11 @@
+{
+  "domain controller": "high",
+  "active directory": "high",
+  "vpn": "high",
+  "email gateway": "high",
+  "exchange": "high",
+  "web server": "medium",
+  "database": "medium",
+  "file server": "medium",
+  "local utility": "low"
+}

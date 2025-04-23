@@ -1,0 +1,16 @@
+Patch Management Policy
+
+Purpose:
+Reduce risk from known vulnerabilities.
+
+Scope:
+All production, dev, and cloud systems.
+
+Standards:
+- Monthly patch window
+- Emergency patch SLA: 48h for critical vulns
+- Patch status tracked in CMDB
+- Rollback plans required for all patches
+
+Compliance:
+PCI DSS 6.2; SOX system maintenance expectations.

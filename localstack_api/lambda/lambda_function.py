@@ -1,26 +1,44 @@
+# lambda_function.py
+
 import json
 import requests
 import traceback
 
 def lambda_handler(event, context):
     try:
-        raw_body = event.get("body") or "{}"
-        body = json.loads(raw_body)
-        prompt = body.get("prompt", "You are a helpful assistant.")
+        # Handle event body
+        body_str = event.get("body", "{}")
+        print("📥 Raw event body:", body_str)
 
-        response = requests.post("http://host.docker.internal:11434/api/generate", json={
-            "model": "llama3",
-            "prompt": prompt,
-            "stream": False
-        }, timeout=15)
+        body = json.loads(body_str)
+        prompt = body.get("input", "").strip()
+
+        if not prompt:
+            return {
+                "statusCode": 400,
+                "body": json.dumps({"error": "Missing 'input' in request body."})
+            }
+
+        print("🧠 Prompt received:", prompt)
+
+        # Call Ollama running locally on host
+        response = requests.post(
+            "http://host.docker.internal:11434/api/generate",
+            json={
+                "model": "llama3",
+                "prompt": prompt,
+                "stream": False
+            },
+            timeout=60
+        )
 
         try:
             ollama_output = response.json()
-        except Exception as parse_err:
+        except Exception:
             return {
-                "statusCode": 500,
+                "statusCode": 502,
                 "body": json.dumps({
-                    "error": "Ollama returned non-JSON response",
+                    "error": "Invalid response from LLM",
                     "raw": response.text
                 })
             }

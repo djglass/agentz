@@ -1,0 +1,22 @@
+Incident Response Policy
+
+Purpose:
+Ensure effective response to security incidents.
+
+Scope:
+All information systems and users.
+
+Phases:
+- Detection
+- Containment
+- Eradication
+- Recovery
+- Post-incident Review
+
+Requirements:
+- Incident playbooks tested annually
+- 24/7 monitoring by SOC
+- Legal and PR involved per severity
+
+Compliance:
+PCI DSS 12.10; SOX for evidence preservation.

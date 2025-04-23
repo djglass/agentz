@@ -1,0 +1,17 @@
+Endpoint Protection Policy
+
+Purpose:
+Ensure all endpoints are secure and compliant.
+
+Scope:
+All corporate laptops, desktops, and mobile devices.
+
+Controls:
+- Full disk encryption (BitLocker, FileVault)
+- EDR agents (CrowdStrike/Defender) required
+- Device posture checks prior to VPN connection
+- Monthly patching enforced via MDM
+- Lost/stolen device procedure in place
+
+Compliance:
+Meets PCI 5.1.1 and SOX endpoint control requirements.
